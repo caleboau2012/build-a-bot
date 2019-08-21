@@ -1,28 +1,105 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <header>
+      <nav>
+        <ul>
+          <li class="nav-item">
+            <router-link class="nav-link" :to="{name: 'Home'}" exact>
+              <img class="logo" src="./assets/logo.png" /> Home
+            </router-link>
+          </li>
+          <li class="nav-item">
+            <router-link class="nav-link" :to="{name: 'Build'}" exact>Build</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link class="nav-link" to="/parts/browse">Browse Parts</router-link>
+          </li>
+          <li class="nav-item cart">
+            <router-link class="nav-link" to="/cart" exact>Cart</router-link>
+            <div class="cart-items">{{cart.length}}</div>
+          </li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <router-view></router-view>
+    </main>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue';
-
 export default {
   name: 'app',
-  components: {
-    HelloWorld,
+  computed: {
+    cart() {
+      return this.$store.state.cart;
+    },
   },
 };
 </script>
 
-<style>
+<style scoped>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+}
+
+main {
+  margin: 0 auto;
+  padding: 30px;
+  background-color: white;
+  width: 1024px;
+  min-height: 300px;
+}
+
+header {
+  background-color: #999;
+  width: 1084px;
+  margin: 0 auto;
+}
+ul {
+  padding: 3px;
+  display: flex;
+}
+.nav-item {
+  display: inline-block;
+  padding: 5px 10px;
+  font-size: 22px;
+  border-right: 1px solid #bbb;
+}
+.nav-item.cart {
+  position: relative;
+  margin-left: auto;
+  border-right: none;
+}
+.logo {
+  vertical-align: middle;
+  height: 30px;
+}
+.cart-items {
+  position: absolute;
+  top: -5px;
+  right: -9px;
+  font-size: 18px;
+  width: 20px;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  display: inline-block;
+  border-radius: 100px;
+  background-color: lightcoral;
+}
+</style>
+
+<style>
+body {
+  background: linear-gradient(to bottom, #555, #999);
+  background-attachment: fixed;
+}
+
+.nav-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.router-link-active {
+  color: white;
 }
 </style>
